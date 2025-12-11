@@ -63,18 +63,3 @@ graph LR
     GW -->|"Write: ns=1;i=1001"| OPC_Server
 
 ```
-
----
-## Estrutura de Arquivos
-
-/
-├── gateway.py           # Script do Gateway (Ponte MQTT <-> OPC UA)
-├── server_opcua.py      # Servidor OPC UA simulado (Mockup PLC)
-├── miniprojeto-opcua/   # Firmware do ESP32 (PlatformIO Project)
-│   ├── src/
-│   │   └── main.cpp     # Código C++ Principal (Lógica FSM)
-│   └── platformio.ini   # Configuração de ambiente e upload
-└── README.md            # Documentação oficial
-    OPC_Server -.->|"Read: ns=1;i=1000"| GW
-    GW -.->|"Pub: Flag"| Broker
-    Broker -.->|"Sub: Flag"| ESP32
