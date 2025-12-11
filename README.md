@@ -59,6 +59,7 @@ graph LR
     Gateway -.->|"Pub: Flag"| Broker
     Broker -.->|"Sub: Flag"| ESP32
 
+```
 ---
 
 ⚙️ Pré-requisitos e Instalação
