@@ -58,3 +58,89 @@ graph LR
     OPC -.->|"Read: NodeId 1000"| Gateway
     Gateway -.->|"Pub: Flag"| Broker
     Broker -.->|"Sub: Flag"| ESP32
+
+---
+
+⚙️ Pré-requisitos e Instalação
+1. Hardware Necessário
+Placa de desenvolvimento ESP32.
+
+Cabo USB de dados.
+
+PC com Python 3 instalado.
+
+2. Software Necessário
+VS Code com extensão PlatformIO (recomendado) ou Arduino IDE.
+
+Broker MQTT (Ex: Mosquitto).
+
+3. Instalação das Dependências Python
+No terminal, execute:
+
+Bash
+
+pip install opcua paho-mqtt
+🚀 Como Executar (Passo a Passo)
+Para garantir o funcionamento, siga estritamente esta ordem de execução:
+
+Passo 1: Configurar IPs
+Verifique o IP da sua máquina (ex: ipconfig no Windows).
+
+Atualize o arquivo gateway.py com o IP do seu Broker MQTT.
+
+Atualize o arquivo src/main.cpp (no firmware) com o IP do Broker e suas credenciais Wi-Fi.
+
+Passo 2: Iniciar a Infraestrutura
+Abra dois terminais na pasta raiz do projeto:
+
+Terminal 1 (Servidor OPC UA):
+
+Bash
+
+python server_opcua.py
+
+Saída esperada: Servidor OPC UA iniciado em opc.tcp://0.0.0.0:4840.
+
+Terminal 2 (Gateway):
+
+Bash
+
+python gateway.py
+Saída esperada: [MQTT] Conectado e [OPC-UA] Conectado.
+
+Passo 3: Rodar o Firmware
+Conecte o ESP32 via USB.
+
+Faça o upload do código usando o PlatformIO (Seta → na barra inferior).
+
+Abra o monitor serial (Serial Monitor) para acompanhar os logs.
+
+✅ Validação e Testes
+Cenário 1: Oscilação (Flag = True)
+Por padrão, a Flag inicia como False.
+
+Utilize um cliente OPC UA (como o UaExpert) para conectar em opc.tcp://localhost:4840.
+
+Altere o valor do nó Flag (ns=1;i=1000) para True.
+
+
+Resultado: O ESP32 começará a enviar contagens: 0, 1, 2... 8, 9, 8, 7....
+
+
+Cenário 2: Pausa (Flag = False)
+Altere o valor do nó Flag para False.
+
+
+Resultado: O ESP32 deve parar de enviar mensagens e manter o último valor no display/log.
+
+
+Cenário 3: Reconexão
+Desligue o servidor OPC UA (Ctrl+C no Terminal 1).
+
+O Gateway deve entrar em modo de reconexão.
+
+Reinicie o servidor. O sistema deve se recuperar automaticamente.
+
+
+📝 Licença
+Este projeto é de uso acadêmico para fins de avaliação na disciplina de Sistemas Inteligentes e Conectados - UEA.
