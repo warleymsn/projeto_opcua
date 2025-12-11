@@ -1,0 +1,14 @@
+# Ignorar ambiente virtual Python
+.venv/
+__pycache__/
+*.pyc
+
+# Ignorar compilação do ESP32/PlatformIO
+.pio/
+.vscode/
+**/output/
+**/*.bin
+**/*.elf
+
+# Ignorar arquivos do sistema
+Thumbs.db
